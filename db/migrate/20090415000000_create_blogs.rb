@@ -12,17 +12,17 @@ end
 
 class CreateBlogs < ActiveRecord::Migration
   def self.up
-    create_versioned_table :blogs do |t|
+    create_content_table :blogs do |t|
       t.string :name
       t.string :format
       t.text :template
     end
-    
+
     create_table :blog_group_memberships do |t|
       t.integer :blog_id
       t.integer :group_id
     end
-    
+
   end
 
   def self.down

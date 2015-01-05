@@ -1,6 +1,6 @@
 class CreateBlogPosts < ActiveRecord::Migration
   def self.up
-    create_versioned_table :blog_posts do |t|
+    create_content_table :blog_posts do |t|
       t.integer :blog_id
       t.integer :author_id
       t.integer :category_id

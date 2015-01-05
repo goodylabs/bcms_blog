@@ -1,6 +1,6 @@
 class CreateBlogComments < ActiveRecord::Migration
   def self.up
-    create_versioned_table :blog_comments do |t|
+    create_content_table :blog_comments do |t|
       t.integer :post_id
       t.string :author
       t.string :email
