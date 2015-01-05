@@ -15,15 +15,15 @@ Gem::Specification.new do |s|
   s.summary = "The Blog Module for BrowserCMS"
   s.email = "github@browsermedia.com"
   s.homepage = "http://www.github.com/browsermedia/bcms_blog"
-  
+
   s.files = Dir["{app,config,db,lib}/**/*"]
   s.files += Dir["Gemfile", "LICENSE.txt", "COPYRIGHT.txt", "GPL.txt" ]
-  
+
   s.test_files += Dir["test/**/*"]
   s.test_files -= Dir['test/dummy/**/*']
-  
-  s.add_dependency("browsercms", "< 3.6.0", ">= 3.5.0")
- 
+
+  s.add_dependency "browsercms", "~> 4.0.0.rc1"
+
 
 end
 
