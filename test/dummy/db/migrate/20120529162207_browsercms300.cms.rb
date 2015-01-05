@@ -72,7 +72,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_versioned_table :html_blocks do |t|
+    create_content_table :html_blocks do |t|
       t.string :name
       t.string :content, :limit => 64.kilobytes + 1
     end
