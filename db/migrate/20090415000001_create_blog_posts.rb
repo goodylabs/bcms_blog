@@ -1,6 +1,6 @@
 class CreateBlogPosts < ActiveRecord::Migration
   def self.up
-    create_content_table :blog_posts do |t|
+    create_content_table :bcms_blog_blog_posts do |t|
       t.integer :blog_id
       t.integer :author_id
       t.integer :category_id
@@ -15,7 +15,7 @@ class CreateBlogPosts < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :blog_post_versions
-    drop_table :blog_posts
+    drop_table :bcms_blog_blog_post_versions
+    drop_table :bcms_blog_blog_posts
   end
 end
