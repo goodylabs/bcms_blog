@@ -1,4 +1,9 @@
 module BcmsBlog
+
+  def self.table_name_prefix
+    'bcms_blog_'
+  end
+
   class Blog < ActiveRecord::Base
     acts_as_content_block
 
