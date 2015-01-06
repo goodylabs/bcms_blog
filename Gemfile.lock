@@ -92,6 +92,8 @@ GEM
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     ffi (1.9.6)
+    haml (4.0.6)
+      tilt
     hike (1.2.3)
     i18n (0.7.0)
     jquery-rails (3.1.2)
@@ -175,6 +177,7 @@ PLATFORMS
 DEPENDENCIES
   bcms_blog!
   factory_girl_rails
+  haml
   mocha
   rails (= 4.0.13.rc1)
   sqlite3
