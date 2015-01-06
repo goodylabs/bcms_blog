@@ -1,0 +1,2 @@
+= f.input :name
+= f.input :blog_id, collection: BcmsBlog::Blog.all.map{|b| [b.name, b.id.to_s]}

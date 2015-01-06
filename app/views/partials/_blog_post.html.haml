@@ -1,0 +1,38 @@
+- # _counter is defined only if we pass :collection to the partial
+- if defined?(blog_post_counter)
+  - showing_individual_post = false
+- else
+  - showing_individual_post = true
+  - blog_post_counter = 0
+.blog_post{id: "blog_post_#{blog_post.id}"}
+  - if blog_post.attachment
+    .image
+      = image_tag blog_post.attachment.file_path
+  %h2= link_to h(blog_post.name), href = _blog_post_path(blog_post)
+  .date= blog_post.published_at.to_s(:long)
+  .body
+    - if showing_individual_post or blog_post.summary.blank?
+      = blog_post.body.html_safe
+    - else
+      = blog_post.summary
+      %p.read_more
+        = link_to 'Read More »', href
+  .meta
+    - unless blog_post.category_id.blank?
+      Posted in #{link_to h(blog_post.category_name), _blog_path(blog_post.blog, 'posts_in_category', :category => blog_post.category_name)}
+      %strong |
+    - if blog_post.tags.any?
+      Tags:
+      %span.tags
+        = blog_post.tags.map{|t| link_to(h(t.name), _blog_path(blog_post.blog, 'posts_with_tag', :tag => t.name)) }.join(", ").html_safe
+      %strong |
+    = link_to h(pluralize(blog_post.comments.published.count, "Comment")), "#{_blog_post_path(blog_post)}#comments"
+  %br/
+  - comments = blog_post.comments.published.reject(&:new_record?)
+  - if showing_individual_post and comments.any?
+    %h2 Comments
+    - comments.each_with_index do |comment, i|
+      %div{class: "comment #{'first' if i == 0}"}
+        = h comment.body
+        %p
+          —#{comment.url.present? ? link_to(h(comment.author), comment.url) : h(comment.author)}

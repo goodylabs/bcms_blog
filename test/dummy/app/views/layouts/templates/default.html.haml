@@ -1,0 +1,16 @@
+!!!
+%html{lang: "en", "xml:lang" => "en", xmlns: "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{content: "text/html;charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title= page_title
+    = yield :html_head
+    - # Need this so integration tests don't break
+    - if BcmsBlog::Blog.find_by_name("Patricks Blog")
+      = feeds_link_tag_for "Patricks Blog"
+  %body{style: "margin: 0; padding: 0; text-align: center;"}
+    = cms_toolbar
+    #wrapper{style: "width: 700px; margin: 0 auto; text-align: left; padding: 30px"}
+      Breadcrumbs: #{render_breadcrumbs}
+      Main Menu: #{render_menu}
+      %h1= page_title
+      = container :main

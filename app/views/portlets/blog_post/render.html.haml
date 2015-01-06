@@ -1,0 +1,24 @@
+- logger.warn "Page title is: #{page_title}"
+- page_title "SOMETHING ELSE"
+- logger.warn "Now it's #{page_title}"
+- page_title @blog_post.name
+= render :partial => "partials/blog_post", :object => @blog_post
+.blog_comment_form
+  = form_for @blog_comment, new_comment_params(@portlet) do |f|
+    = f.hidden_field :post_id
+    / = f.errors
+    .fields.text_fields
+      = f.label :author, 'Name *'
+      = f.text_field :author
+    .fields.text_fields
+      = f.label :email, 'E-mail address'
+      = f.text_field :email
+    .fields.text_fields
+      = f.label :url, 'Web site'
+      = f.text_field :url
+    .fields.text_editor_fields
+      = f.label :body, 'Body *'
+      %br/
+      = f.text_area :body, :size => "50x5", :style => 'height: auto'
+    .buttons.clear
+      = submit_tag "Submit comment"

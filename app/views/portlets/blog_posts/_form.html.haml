@@ -1,0 +1,10 @@
+= f.input :name, :label => 'Portlet Name', :instructions => 'Give each portlet a descriptive name (ideally, what sorts of posts are being found).'
+= f.input :blog_id, collection: BcmsBlog::Blog.all.map{|b| [b.name, b.id.to_s]}, :include_blank => true, :label => "Show posts from", :hint => 'Leave blank to include posts from all blogs'
+= f.input :show_posts_as, collection:[['Title (links to post)', 'link'], ['Post', 'post']]
+= f.input :show_full_posts, as: :boolean
+= f.input :category_id, collection: categories_for('Blog Post').map{|c| [c.path, c.id]}, :include_blank => true, :label => "Only posts in category"
+= f.cms_tag_list :label => "Only posts with tags", :instructions => 'Separate tags with spaces'
+= f.input :exclude_tags, :label => 'Exclude posts with tags'
+= f.input :limit, :label => 'Limit'
+= f.input :render_blog_post_code, :label => 'Code to turn blog_post into link text', :instructions=>"Default: Truncates name to 30 characters", as: :text_editor
+= f.input :template, :as => :template_editor
