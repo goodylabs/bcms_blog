@@ -33,6 +33,10 @@ module BcmsBlog
       ]
     } }
 
+    scope :authored_by, lambda{ |user, published=true|
+      where(author: user, published: published)
+    }
+
     INCORRECT_PARAMETERS = "Incorrect parameters. This is probably because you are trying to view the " +
                            "portlet through the CMS interface, and so we have no way of knowing what " +
                            "post(s) to show"
@@ -99,7 +103,7 @@ module BcmsBlog
     def day
       published_at.strftime("%d") unless published_at.blank?
     end
-    
+
     # Return true if this model has an attachment
     def attachment
       !file.blank?
