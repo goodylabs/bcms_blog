@@ -81,7 +81,7 @@ module BcmsBlog
     end
 
     def inline_options
-      {:inline => self.template}
+      {:inline => ( self.template || '' ) }
     end
 
     def self.default_order
