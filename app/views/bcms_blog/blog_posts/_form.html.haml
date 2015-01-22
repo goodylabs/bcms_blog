@@ -1,9 +1,11 @@
 = f.input :name, as: :name,  label: 'Title'
 
 = f.input :file, :as => :file_picker, :label => "Blog Post Image"
-- unless @block.file.nil?
-  - unless @block.file.data.nil?
-    = image_tag @block.file.data.url
+
+- unless @block.new_record?
+  - obj = BcmsBlog::BlogPost.find(f.object.id)
+  - unless obj.file.nil?
+    = image_tag obj.file.url
 
 = f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
 = f.input :body, as: :text_editor
