@@ -1,26 +1,26 @@
 module BcmsBlog
   class BlogObserver < ActiveRecord::Observer
-  
-    def after_create(blog)
-      @blog = blog
-      create_section_pages_and_routes
-    end
-  
+
+    # def after_create(blog)
+    #   @blog = blog
+    #   create_section_pages_and_routes
+    # end
+
     def after_save(blog)
       if blog.persisted?
         blog.publish
       end
     end
-  
-    # Can't use before_update since CMS callback stack is altered from normal callbacks.
-    def before_save(blog)
-      if blog.persisted?
-        update_section_pages_and_route(blog)
-      end
-    end
+
+    # # Can't use before_update since CMS callback stack is altered from normal callbacks.
+    # def before_save(blog)
+    #   if blog.persisted?
+    #     update_section_pages_and_route(blog)
+    #   end
+    # end
 
     private
-  
+
     # A section, two pages, 6 routes and a portlet are created alongside every blog.
     # This structure provides sensible defaults so users can pretty much start adding
     # posts right after creating a blog without having to worry about where to put
@@ -36,7 +36,7 @@ module BcmsBlog
     # For example, if you create a blog named 'MyBlog', a section 'MyBlog' will be
     # created. This section will hold two pages: one for the blog ContentBlock that
     # will render the list of posts and one for the BlogPost portlet (ie the individual
-    # post view)  
+    # post view)
     def create_blog_section
       @section = Cms::Section.find_by_name(@blog.name) || (
         @section = Cms::Section.create!(
@@ -52,7 +52,7 @@ module BcmsBlog
 
     # Following with the above example, the first page that is created is named 'MyBlog' and
     # holds the Blog ContentBlock directly, not a portlet. Together with the 5 created routes,
-    # this page and its  ContentBlock handle different post listings (all posts, posts in year, 
+    # this page and its  ContentBlock handle different post listings (all posts, posts in year,
     # month or day and posts by tag or category).
     def create_blog_block_page
       page = Cms::Page.find_by_name(@blog.name) || Cms::Page.create!(
@@ -86,10 +86,10 @@ module BcmsBlog
     end
 
     # When the name of a Blog block changes, we need to change the Post page route.
-    # We also change the *names* of the section and pages that hold the blog block and 
-    # post portlet because presumably, by changing the name of the blog, the intention 
-    # was to reflect this name change in breadcrumbs and menus. 
-    # 
+    # We also change the *names* of the section and pages that hold the blog block and
+    # post portlet because presumably, by changing the name of the blog, the intention
+    # was to reflect this name change in breadcrumbs and menus.
+    #
     # Note that no other routes or paths are updated. This is intentional to be consistent
     # with how BrowserCMS behaves when a Section or Page names change: paths are not
     # updated automatically.
@@ -108,7 +108,7 @@ module BcmsBlog
         page.update_attribute(:name, blog.name)
         page.publish
       end
-    end 
+    end
 
     def reload_routes
        Cms::PageRoute.reload_routes
