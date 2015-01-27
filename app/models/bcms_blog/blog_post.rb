@@ -2,7 +2,9 @@ module BcmsBlog
   class BlogPost < ActiveRecord::Base
     acts_as_content_block :taggable => true
 
-    has_attachment :file
+    has_attachment :file, styles: { medium: '710x355#', small: '353x475#' }
+
+
 
 
     before_save :set_published_at
