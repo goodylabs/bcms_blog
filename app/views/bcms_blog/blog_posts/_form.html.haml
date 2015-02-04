@@ -1,19 +1,28 @@
 = f.input :name, as: :name,  label: 'Title'
-
-= f.input :file, :as => :file_picker, :label => "Blog Post Image"
-
-- unless @block.new_record?
-  - obj = BcmsBlog::BlogPost.find(f.object.id)
-  - unless obj.file.nil?
-    = image_tag obj.file.url
-
-= f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
-= f.input :body, as: :text_editor
-= f.input :published_at, as: :datetime, :label => "Date", :hint=>"The 'published' date/time for the post which is displayed publically."
-- unless @block.new_record?
-  = f.input :author_id, collection: @block.blog.potential_authors.map { |u| ["#{u.full_name} (#{u.login})", u.id] }
+= f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}
 = f.input :category_id, collection: categories_for('Blog Post').map{|c| [c.path, c.id]}, :include_blank => true
 = f.input :subcategory_id, collection: categories_for('Blog Post').map(&:children).flatten.map{|c| [c.path, c.id]}, :include_blank => true
 
+
+= f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
+= f.input :body, as: :text_editor
+
+%br/
+
+= f.input :file, :as => :file_picker, :label => "Blog Post Image"
+
+%br/
+
+- unless @block.new_record?
+  - unless @block.file.nil?
+    = image_tag @block.file.url(:medium)
+    = image_tag @block.file.url(:small)
+
+%br/
+
+= f.input :published_at, as: :datetime, :label => "Date", :hint=>"The 'published' date/time for the post which is displayed publically."
+
+- unless @block.new_record?
+  = f.input :author_id, collection: @block.blog.potential_authors.map { |u| ["#{u.full_name} (#{u.login})", u.id] }
+
 = f.cms_tag_list
-= f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}

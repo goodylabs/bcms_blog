@@ -51,6 +51,35 @@ module BcmsBlog
 
     delegate :editable_by?, :to => :blog
 
+
+    def self.columns_for_index
+      [
+       {:label => "Published At", :method => :published_at, :order => "#{BlogPost.table_name}.published_at"},
+       {:label => "Blog", :method => :blog_name, :order => "#{BlogPost.table_name}.blog"},
+       {:label => "Author", :method => :author_name, :order => "#{BlogPost.table_name}.author"},
+       {:label => "Name", :method => :name, :order => "#{BlogPost.table_name}.name"},
+       {:label => "Category", :method => :category_name, :order => "#{BlogPost.table_name}.category"},
+       {:label => "Subcategory", :method => :subcategory_name, :order => "#{BlogPost.table_name}.subcategory"}
+      ]
+    end
+
+
+    def blog_name
+      blog.name unless blog.nil?
+    end
+
+    def author_name
+      author.full_name unless author.nil?
+    end
+
+    def category_name
+      category.name unless category.nil?
+    end
+
+    def subcategory_name
+      subcategory.name unless subcategory.nil?
+    end
+
     def set_published_at
       if !published_at && publish_on_save
         self.published_at = Time.now
@@ -77,10 +106,10 @@ module BcmsBlog
       "created_at desc"
     end
 
-    def self.columns_for_index
-      [ {:label => "Name", :method => :name, :order => "name" },
-        {:label => "Published At", :method => :published_label, :order => "published_at" } ]
-    end
+    # def self.columns_for_index
+    #   [ {:label => "Name", :method => :name, :order => "name" },
+    #     {:label => "Published At", :method => :published_label, :order => "published_at" } ]
+    # end
 
     def published_label
       published_at ? published_at.to_s(:date) : nil
