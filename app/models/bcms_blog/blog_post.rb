@@ -11,6 +11,12 @@ module BcmsBlog
 
     belongs_to :blog
     belongs_to_category
+    belongs_to :subcategory, :class_name => 'Cms::Category'
+
+    scope :in_subcategory, lambda{|cat| {:conditions => ["subcategory_id = ?", cat.id]}}
+
+
+
     belongs_to :author, :class_name => "Cms::User"
     has_many :comments, :class_name => "BlogComment", :foreign_key => "post_id"
 
