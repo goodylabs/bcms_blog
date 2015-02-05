@@ -4,9 +4,6 @@ module BcmsBlog
 
     has_attachment :file, styles: { medium: '710x355#', small: '353x475#' }
 
-
-
-
     before_save :set_published_at
 
     belongs_to :blog
@@ -16,10 +13,14 @@ module BcmsBlog
     has_and_belongs_to_many :subcategories, class_name: "Cms::Category", join_table: "bcms_blog_blog_posts_subcategories"
 
     # belongs_to_category
-    belongs_to :subcategory, :class_name => 'Cms::Category'
+    # belongs_to :subcategory, :class_name => 'Cms::Category'
 
-    scope :in_subcategory, lambda{|cat| {:conditions => ["subcategory_id = ?", cat.id]}}
-
+    scope :in_category, lambda{|cat|
+      joins(:categories).where('cms_categories.id' => cat.id)
+    }
+    scope :in_subcategory, lambda{|cat|
+      joins(:subcategories).where('subcategories.id' => cat.id)
+    }
 
 
     belongs_to :author, :class_name => "Cms::User"
