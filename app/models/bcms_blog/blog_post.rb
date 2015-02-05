@@ -10,7 +10,12 @@ module BcmsBlog
     before_save :set_published_at
 
     belongs_to :blog
-    belongs_to_category
+
+
+    has_and_belongs_to_many :categories, class_name: "Cms::Category", join_table: "bcms_blog_blog_posts_categories"
+    has_and_belongs_to_many :subcategories, class_name: "Cms::Category", join_table: "bcms_blog_blog_posts_subcategories"
+
+    # belongs_to_category
     belongs_to :subcategory, :class_name => 'Cms::Category'
 
     scope :in_subcategory, lambda{|cat| {:conditions => ["subcategory_id = ?", cat.id]}}
