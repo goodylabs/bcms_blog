@@ -18,9 +18,10 @@
       %p.read_more
         = link_to 'Read More »', href
   .meta
-    - unless blog_post.category_id.blank?
-      Posted in #{link_to h(blog_post.category_name), _blog_path(blog_post.blog, 'posts_in_category', :category => blog_post.category_name)}
-      %strong |
+    - unless blog_post.categories.empty?
+      - blog_post.categories.each do |category|
+        Posted in #{link_to h(category.name), _blog_path(blog_post.blog, 'posts_in_category', :category => category.name)}
+        %strong |
     - if blog_post.tags.any?
       Tags:
       %span.tags

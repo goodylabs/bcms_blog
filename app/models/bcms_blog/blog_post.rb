@@ -63,8 +63,8 @@ module BcmsBlog
        {:label => "Blog", :method => :blog_name, :order => "#{BlogPost.table_name}.blog"},
        {:label => "Author", :method => :author_name, :order => "#{BlogPost.table_name}.author"},
        {:label => "Name", :method => :name, :order => "#{BlogPost.table_name}.name"},
-       {:label => "Category", :method => :category_name, :order => "#{BlogPost.table_name}.category"},
-       {:label => "Subcategory", :method => :subcategory_name, :order => "#{BlogPost.table_name}.subcategory"}
+       {:label => "Categories", :method => :categories_names},
+       {:label => "Subcategory", :method => :subcategories_names}
       ]
     end
 
@@ -77,12 +77,12 @@ module BcmsBlog
       author.full_name unless author.nil?
     end
 
-    def category_name
-      category.name unless category.nil?
+    def categories_names
+      categories.map(&:name).join(", ") unless categories.empty?
     end
 
-    def subcategory_name
-      subcategory.name unless subcategory.nil?
+    def subcategories_names
+      subcategories.map(&:name).join(", ") unless subcategories.empty?
     end
 
     def set_published_at
