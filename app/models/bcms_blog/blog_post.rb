@@ -39,6 +39,20 @@ module BcmsBlog
       end
     end
 
+    scope :fetured_first, lambda{
+      reorder(featured: :desc, published_at: :desc)
+    }
+
+    scope :featured, lambda {
+      where(featured: true)
+    }
+
+    scope :not_featured, lambda {
+      where(featured: false)
+    }
+
+
+
     scope :published_between, lambda { |start, finish|
       { :conditions => [
            "#{table_name}.published_at >= ? AND #{table_name}.published_at < ?",
@@ -68,9 +82,11 @@ module BcmsBlog
     delegate :editable_by?, :to => :blog
 
 
+
     def self.columns_for_index
       [
        {:label => "Published At", :method => :published_at, :order => "#{BlogPost.table_name}.published_at"},
+       {:label => "Featured", :method => :featured, :order => "#{BlogPost.table_name}.featured"},
        {:label => "Blog", :method => :blog_name, :order => "#{BlogPost.table_name}.blog"},
        {:label => "Author", :method => :author_name, :order => "#{BlogPost.table_name}.author"},
        {:label => "Name", :method => :name, :order => "#{BlogPost.table_name}.name"},

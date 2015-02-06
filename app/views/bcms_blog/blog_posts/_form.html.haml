@@ -1,5 +1,7 @@
 = f.input :name, as: :name,  label: 'Title'
 = f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}
+
+= f.input :featured, as: :boolean, label: "Should the blog post be featured"
 = f.association :categories, collection: categories_for('Blog Post').select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 = f.association :subcategories, collection: categories_for('Blog Post').select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 
