@@ -22,6 +22,9 @@ module BcmsBlog
       joins(:subcategories).where('subcategories.id' => cat.id)
     }
 
+    scope :in_categories_by_name, lambda{|categories_names|
+     joins(:categories).where('cms_categories.name IN (?)', categories_names)
+    }
 
     belongs_to :author, :class_name => "Cms::User"
     has_many :comments, :class_name => "BlogComment", :foreign_key => "post_id"
