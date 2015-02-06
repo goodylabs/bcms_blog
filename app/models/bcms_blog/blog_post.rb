@@ -31,6 +31,13 @@ module BcmsBlog
 
     before_validation :set_slug
     validates_presence_of :name, :slug, :blog_id, :author_id
+    validate :must_have_at_least_one_category
+
+    def must_have_at_least_one_category
+      if categories.empty? or categories.all? {|child| child.marked_for_destruction? }
+        errors.add(:base, 'Must have at least one category')
+      end
+    end
 
     scope :published_between, lambda { |start, finish|
       { :conditions => [
