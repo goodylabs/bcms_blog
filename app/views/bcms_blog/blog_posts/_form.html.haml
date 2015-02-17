@@ -1,58 +1,31 @@
-%h2
-  Generic
-.form-group
-  = f.input :name, as: :name,  label: 'Title'
-  = f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}
-  = f.input :featured, as: :boolean, label: "Should the blog post be featured", boolean_style: :inline
+= f.input :name, as: :name,  label: 'Title'
+= f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}
+= f.input :featured, as: :boolean, label: "Should the blog post be featured", boolean_style: :inline
 
-%h2
-  Categories
-.form-group
-  = f.association :categories, collection: categories_for('Blog Post').select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
-  = f.association :subcategories, collection: categories_for('Blog Post').select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
+= f.association :categories, collection: categories_for('Blog Post').select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
+= f.association :subcategories, collection: categories_for('Blog Post').select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 
 
-%h2
-  Content
-.form-group
-  = f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
-  = f.input :body, as: :text_editor
+= f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
+= f.input :body, as: :text_editor
 
 
-%h2
-  Teaser Video and Image
-.row
-  .col-md-6
-    %h3
-      Video file
-    = f.input :video, :as => :file_picker, :label => "Blog Post Video"
-    - unless @block.video.nil?
-      = video_tag @block.video.url
-  .col-md-6
-    %h3
-      Video url
-    = f.input :video_url, :label => "Blog Post Video Url" , as: :url
-    - unless @block.video_url.nil?
-      = video_tag @block.video_url
+= f.input :video, :as => :file_picker, :label => "Blog Post Video"
+- unless @block.video.nil?
+  = video_tag @block.video.url
 
-.image
-  %h3
-    Image file
-  = f.input :file, :as => :file_picker, :label => "Blog Post Image"
-  - unless @block.new_record?
-    - unless @block.file.nil?
-      .row
-        .col-md-6
-          = image_tag @block.file.url(:medium)
-        .col-md-6
-          = image_tag @block.file.url(:small)
+= f.input :video_url, :label => "Blog Post Video Url" , as: :url
+- unless @block.video_url.nil?
+  = video_tag @block.video_url
 
-  %h3
-    Image url
-  = f.input :image_url, :label => "Blog Post Image Url", as: :url
-  - unless @block.image_url.nil?
-    = image_tag @block.image_url
+= f.input :file, :as => :file_picker, :label => "Blog Post Image"
+- unless @block.file.nil?
+  = image_tag @block.file.url(:medium)
+  = image_tag @block.file.url(:small)
 
+= f.input :image_url, :label => "Blog Post Image Url", as: :url
+- unless @block.image_url.nil?
+  = image_tag @block.image_url
 
 
 %br/
