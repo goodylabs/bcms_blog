@@ -5,9 +5,12 @@
   - showing_individual_post = true
   - blog_post_counter = 0
 .blog_post{id: "blog_post_#{blog_post.id}"}
-  - if blog_post.attachment
+  - if blog_post.file.present?
     .image
       = image_tag blog_post.file.url
+  - if blog_post.video.present?
+    .video
+      = video_tag blog_post.video.url
   %h2= link_to h(blog_post.name), href = _blog_post_path(blog_post)
   .date= blog_post.published_at.to_s(:long)
   .body

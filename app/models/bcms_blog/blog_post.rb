@@ -4,6 +4,9 @@ module BcmsBlog
 
     has_attachment :file, styles: { medium: '710x355#', small: '353x475#' }
 
+    has_attachment :video
+
+
     before_save :set_published_at
 
     belongs_to :blog
