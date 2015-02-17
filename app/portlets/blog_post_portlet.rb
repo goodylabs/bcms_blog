@@ -28,7 +28,7 @@ class BlogPostPortlet < Cms::Portlet
   def create_comment
     # work_around_cms_3_3_bug_where_current_user_is_not_correctly_set
 
-    params[:blog_comment].merge! :ip => request.remote_ip
+    params[:blog_comment].merge!(:ip => request.remote_ip, publish_on_save: false)
     blog_comment = BcmsBlog::BlogComment.new(blog_comment_params)
     if blog_comment.valid? && blog_comment.save
       url_for_success
