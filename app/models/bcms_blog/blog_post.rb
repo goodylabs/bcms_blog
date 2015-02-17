@@ -180,5 +180,15 @@ module BcmsBlog
     def attachment
       !file.blank?
     end
+
+
+    def teaser_video_url
+      self.video.present? ? self.video.url : self.video_url
+    end
+
+    def teaser_image_url
+      self.file.present? ? self.file.url : self.image_url
+    end
+
   end
 end
