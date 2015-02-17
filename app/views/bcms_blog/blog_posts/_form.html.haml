@@ -9,33 +9,36 @@
 = f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
 = f.input :body, as: :text_editor
 
-
+%h2
+  Teaser Video and/or Image
 .video
-  %h2
-    Video
   %h3
     Video file
   = f.input :video, :as => :file_picker, :label => "Blog Post Video"
+  - unless @block.video.nil?
+    = video_tag @block.video.url
   %h3
     Video url
   = f.input :video_url, :label => "Blog Post Video Url"
+  - unless @block.video_url.nil?
+    = video_tag @block.video_url
 
 .image
-  %h2
-    Image
   %h3
     Image file
   = f.input :file, :as => :file_picker, :label => "Blog Post Image"
-  %h3
-    Image url
-  = f.input :image_url, :as => :file_picker, :label => "Blog Post Image Url"
-
-  %br/
-
   - unless @block.new_record?
     - unless @block.file.nil?
       = image_tag @block.file.url(:medium)
       = image_tag @block.file.url(:small)
+
+  %h3
+    Image url
+  = f.input :image_url, :label => "Blog Post Image Url"
+  - unless @block.image_url.nil?
+    = image_tag @block.image_url
+
+
 
 %br/
 
