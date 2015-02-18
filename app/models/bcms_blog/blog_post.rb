@@ -25,6 +25,18 @@ module BcmsBlog
       joins(:subcategories).where('subcategories.id' => cat.id)
     }
 
+    scope :in_categories, lambda{|cats|
+      joins(:categories).where('cms_categories.id IN (?)', cats.map(&:id))
+    }
+    scope :in_subcategories, lambda{|cats|
+      joins(:subcategories).where('cms_categories.id IN (?)', cats.map(&:id))
+    }
+
+    scope :in_categories_and_subcategories, lambda {|post|
+      cats = [post.categories, post.subcategories].flatten
+      joins(:categories).joins(:subcategories).where('cms_categories.id IN (?)', cats.map(&:id))
+    }
+
     scope :in_categories_by_name, lambda{|categories_names|
      joins(:categories).where('cms_categories.name IN (?)', categories_names)
     }
@@ -96,6 +108,11 @@ module BcmsBlog
        {:label => "Categories", :method => :categories_names},
        {:label => "Subcategory", :method => :subcategories_names}
       ]
+    end
+
+
+    def related_posts_by_category_and_subcategory
+      self.blog.posts.in_categories_and_subcategories(self).where.not(:id, self.id )
     end
 
 
