@@ -120,7 +120,7 @@ module BcmsBlog
     end
 
     def related_posts_by_category_and_subcategory
-      self.blog.posts.in_categories_and_subcategories(self).where.not(:id, self.id )
+      self.blog.posts.in_categories_and_subcategories(self).where.not(:id, self.id ).uniq
     end
 
 
