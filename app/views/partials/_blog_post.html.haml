@@ -31,6 +31,9 @@
       %p.read_more
         = link_to 'Read More »', href
   .meta
+    %p
+      = "Featured: #{blog_post.featured}"
+      = "On Homepage: #{blog_post.on_homepage}"
     - unless blog_post.categories.empty?
       - blog_post.categories.each do |category|
         Posted in #{link_to h(category.name), _blog_path(blog_post.blog, 'posts_in_category', :category => category.name)}
