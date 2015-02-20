@@ -58,6 +58,10 @@ module BcmsBlog
       end
     end
 
+    scope :homepage_featured_first, lambda {
+      reorder(on_homepage: :desc, featured: :desc, published_at: :desc)
+    }
+
     scope :fetured_first, lambda{
       reorder(featured: :desc, published_at: :desc)
     }
