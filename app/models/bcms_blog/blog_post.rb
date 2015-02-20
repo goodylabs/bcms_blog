@@ -110,6 +110,7 @@ module BcmsBlog
       [
        {:label => "Published At", :method => :published_at, :order => "#{BlogPost.table_name}.published_at"},
        {:label => "Featured", :method => :featured, :order => "#{BlogPost.table_name}.featured"},
+       {:label => "On Homepage", :method => :on_homepage, :order => "#{BlogPost.table_name}.on_homepage"},
        {:label => "Blog", :method => :blog_name, :order => "#{BlogPost.table_name}.blog"},
        {:label => "Author", :method => :author_name, :order => "#{BlogPost.table_name}.author"},
        {:label => "Name", :method => :name, :order => "#{BlogPost.table_name}.name"},
