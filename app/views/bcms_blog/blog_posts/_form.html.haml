@@ -31,8 +31,7 @@
 
 
 %br/
-
-= f.input :published_at, as: :date_picker, :label => "Date", :hint=>"The 'published' date/time for the post which is displayed publically."
+= f.input :published_at, as: :date_picker, :label => "Date", :hint=>"The 'published' date/time for the post which is displayed publically.", input_html: { value: f.object.published_at || Date.today.strftime('%Y/%m/%d') }
 
 - unless @block.new_record?
   = f.input :author_id, collection: @block.blog.potential_authors.map { |u| ["#{u.full_name} (#{u.login})", u.id] }

@@ -49,7 +49,7 @@ module BcmsBlog
     has_many :comments, :class_name => "BlogComment", :foreign_key => "post_id"
 
     before_validation :set_slug
-    validates_presence_of :name, :slug, :blog_id, :author_id
+    validates_presence_of :name, :slug, :blog_id, :author_id, :published_at
     validate :must_have_at_least_one_category
 
     def must_have_at_least_one_category
