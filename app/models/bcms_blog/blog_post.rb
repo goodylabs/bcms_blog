@@ -112,7 +112,7 @@ module BcmsBlog
        {:label => "Featured", :method => :featured, :order => "#{BlogPost.table_name}.featured"},
        {:label => "On Homepage", :method => :on_homepage, :order => "#{BlogPost.table_name}.on_homepage"},
        {:label => "Blog", :method => :blog_name, :order => "#{BlogPost.table_name}.blog"},
-       {:label => "Author", :method => :author_name, :order => "#{BlogPost.table_name}.author"},
+       {:label => "Author", :method => :published_author_name, :order => "#{BlogPost.table_name}.author"},
        {:label => "Name", :method => :name, :order => "#{BlogPost.table_name}.name"},
        {:label => "Categories", :method => :categories_names},
        {:label => "Subcategory", :method => :subcategories_names}
@@ -133,8 +133,15 @@ module BcmsBlog
       blog.name unless blog.nil?
     end
 
-    def author_name
+    def author_full_name
       author.full_name unless author.nil?
+    end
+
+    def published_author_name
+      return "" if self.hide_author
+      return self.author_name unless self.author_name.blank?
+      return self.author.full_name unless self.author.nil?
+      ""
     end
 
     def categories_names

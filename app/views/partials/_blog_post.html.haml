@@ -21,6 +21,10 @@
     .image
       = video_tag blog_post.video_url, controls:true
 
+
+  %h2
+    = blog_post.published_author_name
+
   %h2= link_to h(blog_post.name), href = _blog_post_path(blog_post)
   .date= blog_post.published_at.to_s(:long)
   .body

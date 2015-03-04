@@ -1,40 +1,98 @@
 = f.input :name, as: :name,  label: 'Title'
 = f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}
 
-= f.input :featured, as: :boolean, label: "Should the blog post be featured", boolean_style: :inline
+
+%hr/
+
+%blockquote
+  %p
+    The 'published' date/time for the post which is displayed publically.
+= f.input :published_at, as: :date_picker, :label => "Date", input_html: { value: ( f.object.published_at ? f.object.published_at.strftime('%Y/%m/%d') : nil ) || Time.now.strftime('%Y/%m/%d') }
+
+-# - unless @block.new_record?
+%hr/
+%blockquote
+  %p
+    Set the author name.
+    By default the author name will be generated from assigned user data.
+
+    If the author name is provided it take precedence on above.
+    If you like to hide author name - please select 'hide author' checkbox.
+
+= f.input :author_id, collection: Cms::User.all.map { |u| ["#{u.full_name} (#{u.login})", u.id] }
+= f.input :author_name
+= f.input :hide_author, as: :boolean, label: "Should the author be hidden", boolean_style: :inline
+
+
+%hr/
+
+%blockquote
+  %p
+    If Blog Post is featured it will be presented first on homepage
 = f.input :on_homepage, as: :boolean, label: "Should the blog post be featured on homepage", boolean_style: :inline
+
+%hr/
+%blockquote
+  %p
+    If Blog Post is featured it will be presented first on hub page
+= f.input :featured, as: :boolean, label: "Should the blog post be featured", boolean_style: :inline
+
+%hr/
+%blockquote
+  %p
+    Please select Blog Post categories
 
 = f.association :categories, collection: categories_for('Blog Post').select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 = f.association :subcategories, collection: categories_for('Blog Post').select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 
 
+%hr/
+%blockquote
+  %p
+    Provide Blog post summary
 = f.input :summary, :style => "height: 200px", :instructions => 'This will be displayed on the list page with a Read More link if present', as: :text_editor
+
+%hr/
+%blockquote
+  %p
+    Provide Blog Post content
 = f.input :body, as: :text_editor
 
+%hr/
+%blockquote
+  %p
+    There is following precedense for media to be selected as a teaser view on hub and homepage
+    %ol
+      %li
+        Uploaded Video
+      %li
+        Video URL
+      %li
+        Uploaded Image
+      %li
+        Image Url
 
 = f.input :video, :as => :file_picker, :label => "Blog Post Video"
 - unless @block.video.nil?
   = video_tag @block.video.url
+%hr/
 
 = f.input :video_url, :label => "Blog Post Video Url" , as: :url
 - unless @block.video_url.nil?
   = video_tag @block.video_url
+%hr/
 
 = f.input :file, :as => :file_picker, :label => "Blog Post Image"
 - unless @block.file.nil?
   = image_tag @block.file.url(:medium)
   = image_tag @block.file.url(:small)
+%hr/
 
 = f.input :image_url, :label => "Blog Post Image Url", as: :url
 - unless @block.image_url.nil?
   = image_tag @block.image_url
+%hr/
 
 
-%br/
-= f.input :published_at, as: :date_picker, :label => "Date", :hint=>"The 'published' date/time for the post which is displayed publically.",
-  input_html: { value: ( f.object.published_at ? f.object.published_at.strftime('%Y/%m/%d') : nil ) || Time.now.strftime('%Y/%m/%d') }
 
-- unless @block.new_record?
-  = f.input :author_id, collection: @block.blog.potential_authors.map { |u| ["#{u.full_name} (#{u.login})", u.id] }
-
-= f.cms_tag_list
+-# = f.cms_tag_list
