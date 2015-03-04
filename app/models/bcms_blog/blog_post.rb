@@ -5,7 +5,7 @@ module BcmsBlog
     has_attachment :file, styles: { medium: '710x355#', small: '353x475#' }
 
     has_attachment :video
-
+    has_many :references, as: :referencable
 
     before_save :set_published_at
 
