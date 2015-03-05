@@ -18,5 +18,14 @@ module BcmsBlog
       {:url=> Cms::Engine.routes.url_helpers.portlet_handler_path(:id=>portlet.id, :handler=>'create_comment'), 
       :method=>'post'}
     end
+
+    def categories_by_type_id(blog_id, order="name")
+      blog = Blog.find_by(id: blog_id)
+      return [Cms::Category.new(:name => "-- You must choose proper blog to see categories --")] if blog.nil?
+      cat_type = blog.category_type
+      categories = cat_type ? cat_type.category_list(order) : [Category.new(:name => "-- You must choose proper blog to see categories")]
+      categories.empty? ? [Cms::Category.new(:name => "-- You must first create a Category with a Category Type of '#{category_type_name}'.")] : categories
+    end
+
   end
 end
