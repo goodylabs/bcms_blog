@@ -10,6 +10,7 @@ module BcmsBlog
     has_many :posts, :class_name => "BlogPost", :conditions => { :published => true }, :order => "published_at desc"
     has_many :blog_group_memberships
     has_many :groups, :through => :blog_group_memberships, :class_name=>"Cms::Group"
+    belongs_to :category_type, :class_name => 'Cms::CategoryType'
 
     # attr_accessible :group_ids
 
