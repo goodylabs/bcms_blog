@@ -1,7 +1,6 @@
 = f.input :name, as: :name
 = f.input :moderate_comments, as: :boolean
 = f.association :category_type, collection: Cms::CategoryType.all.map{ |ct| [ct.name, ct.id] }
-= f.association :job_sectors, collection: Freshminds::JobSector.published.map{ |sector| [sector.name, sector.id] }, include_blank: true
 .checkbox_group.fields{:style => "float: left; width: 100%"}
   %label Permissions
   = hidden_field_tag "blog[group_ids][]", "", :id => nil
