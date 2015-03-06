@@ -19,10 +19,9 @@ module BcmsBlog
       :method=>'post'}
     end
 
-    def categories_by_type_id(blog_id, order="name")
-      blog = Blog.find_by(id: blog_id)
-      return [Cms::Category.new(:name => "-- You must choose proper blog to see categories --")] if blog.nil?
-      cat_type = blog.category_type
+    def categories_by_type_id(category_type_id, order="name")
+      return [Cms::Category.new(:name => "-- You must choose proper blog to see categories --")] if category_type_id.blank?
+      cat_type = Cms::CategoryType.find_by(id: category_type_id)
       categories = cat_type ? cat_type.category_list(order) : [Category.new(:name => "-- You must choose proper blog to see categories")]
       categories.empty? ? [Cms::Category.new(:name => "-- You must first create a Category with a Category Type of '#{category_type_name}'.")] : categories
     end
