@@ -1,14 +1,29 @@
 = f.input :name, as: :name,  label: 'Title'
-= f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}, selected: params[:category_type_id], include_blank: true
+= f.input :blog_id, collection: BcmsBlog::Blog.editable_by(current_user).map{|b| [b.name, b.id]}, include_blank: true
 
 
 :javascript
-  $( "#blog_post_blog_id" ).change(function() {
-    if($(this).val() != ""){
-      window.location.href = '/bcms_blog/blog_posts/new?category_type_id=' + $(this).val();
-    }else{
-      window.location.href = '/bcms_blog/blog_posts/new'
+  $(function() {
+    elem = $( "div.categories ")
+    elem.hide();
+    elem.prop( "disabled", true );
+    elem.find("select, input").prop( "disabled", true );
+
+    if($( "#blog_post_blog_id" ).val() != ""){
+      elem = $( "div.categories[id="+ $( "#blog_post_blog_id" ).val()  +"]" );
+      elem.show();
+      elem.find("select, input").prop( "disabled", false );
     }
+
+    $( "#blog_post_blog_id" ).change(function() {
+      elem = $( "div.categories" )
+      elem.hide();
+      elem.find("select, input").prop( "disabled", true );
+
+      elem = $( "div.categories[id="+ $( "#blog_post_blog_id" ).val()  +"]" );
+      elem.show();
+      elem.find("select, input").prop( "disabled", false );
+    });
   });
 
 %hr/
@@ -51,9 +66,13 @@
   %p
     Please select Blog Post categories
 
-= f.association :categories, collection: categories_by_type_id(params[:category_type_id]).select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
-= f.association :subcategories, collection: categories_by_type_id(params[:category_type_id]).select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
+- BcmsBlog::Blog.editable_by(current_user).each do |b|
+  .categories{id:b.id}
+    = f.association :categories, collection: categories_by_type_id(b.category_type.id).select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
+    = f.association :subcategories, collection: categories_by_type_id(b.category_type.id).select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 
+  -# = f.association :categories, collection: categories_by_type_id(params[:category_type_id]).select{|c| c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
+  -# = f.association :subcategories, collection: categories_by_type_id(params[:category_type_id]).select{|c| !c.parent.nil? }.map{|c| [c.path, c.id]}, :include_blank => true
 
 %hr/
 %blockquote
