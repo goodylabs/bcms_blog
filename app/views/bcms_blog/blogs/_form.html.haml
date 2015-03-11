@@ -1,5 +1,6 @@
 = f.input :name, as: :name
 = f.input :moderate_comments, as: :boolean
+= f.input :email
 = f.association :category_type, collection: Cms::CategoryType.where("name LIKE '%blog%' ").map{ |ct| [ct.name, ct.id] }
 .checkbox_group.fields{:style => "float: left; width: 100%"}
   %label Permissions
