@@ -188,7 +188,8 @@ module BcmsBlog
     end
 
     def set_slug
-      self.slug = name.to_slug
+      self.slug = generate_slug(name.to_slug)
+      # self.slug = name.to_slug
     end
 
     def path
@@ -226,6 +227,17 @@ module BcmsBlog
     def teaser_image_url
       self.file.present? ? self.file.url : self.image_url
     end
+
+    private
+
+    def generate_slug(slug, suffix = '')
+      unless BcmsBlog::BlogPost.where('slug LIKE ? AND id NOT IN (?)' , [slug, suffix].join, id.to_i).empty?
+        generate_slug(slug, suffix.to_i - 1)
+      else
+        [slug, suffix].join
+      end
+    end
+
 
   end
 end
