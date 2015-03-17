@@ -34,7 +34,11 @@ module BcmsBlog
 
     scope :in_categories_and_subcategories, lambda {|post|
       cats = [post.categories, post.subcategories].flatten
-      joins(:categories).joins(:subcategories).where('cms_categories.id IN (?)', cats.map(&:id))
+      a = joins(:categories)
+      if post.subcategories.any?
+        a = a.joins(:subcategories)
+      end
+      a.where('cms_categories.id IN (?)', cats.map(&:id))
     }
 
     scope :in_categories_by_name, lambda{|categories_names|
