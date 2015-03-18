@@ -100,9 +100,12 @@
       %li
         Image Url
 
-= f.input :video, :as => :file_picker, :label => "Blog Post Video"
-- unless @block.video.nil?
-  = video_tag @block.video.url
+.attachments-row
+  = f.input :video, :as => :file_picker, :label => "Blog Post Video"
+  - unless @block.video.data_file_name.nil?
+    = video_tag @block.video.url, controls:true
+    .btn-row
+      = link_to("Delete attachment", '#', data: { purpose: 'destroy-attachment', id: f.object.video.id}, class: 'btn btn-mini btn-danger image')
 %hr/
 
 = f.input :video_url, :label => "Blog Post Video Url" , as: :url
@@ -110,10 +113,12 @@
   = video_tag @block.video_url
 %hr/
 
-= f.input :file, :as => :file_picker, :label => "Blog Post Image"
-- unless @block.file.nil?
-  = image_tag @block.file.url(:medium)
-  = image_tag @block.file.url(:small)
+.attachments-row
+  = f.input :file, :as => :file_picker, :label => "Blog Post Image"
+  - unless @block.file.data_file_name.nil?
+    = image_tag @block.file.url(:small)
+    .btn-row
+      = link_to("Delete attachment", '#', data: { purpose: 'destroy-attachment', id: f.object.file.id}, class: 'btn btn-mini btn-danger image')
 %hr/
 
 = f.input :image_url, :label => "Blog Post Image Url", as: :url

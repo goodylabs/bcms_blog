@@ -6,14 +6,14 @@
   - blog_post_counter = 0
 .blog_post{id: "blog_post_#{blog_post.id}"}
 
-  - if blog_post.file.present?
+  - if blog_post.file.present? && blog_post.file.data_file_name.present?
     .image
       = image_tag blog_post.file.url
   - if blog_post.image_url.present?
     .image
       = image_tag blog_post.image_url
 
-  - if blog_post.video.present?
+  - if blog_post.video.present? && blog_post.video.data_file_name.present?
     .video
       = video_tag blog_post.video.url, controls:true
 
