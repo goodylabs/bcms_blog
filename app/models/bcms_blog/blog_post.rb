@@ -239,11 +239,23 @@ module BcmsBlog
 
 
     def teaser_video_url
-      self.video.present? ? self.video.url : self.video_url
+      res = self.video_url
+      unless self.video.nil?
+        unless self.video.path.nil?
+          res = self.video.url
+        end
+      end
+      res
     end
 
     def teaser_image_url
-      self.file.present? ? self.file.url : self.image_url
+      res = self.image_url
+      unless self.file.nil?
+        unless self.file.path.nil?
+          res = self.file.url
+        end
+      end
+      res
     end
 
     private
