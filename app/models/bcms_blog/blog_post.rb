@@ -248,11 +248,11 @@ module BcmsBlog
       res
     end
 
-    def teaser_image_url
+    def teaser_image_url(style=nil)
       res = self.image_url
       unless self.file.nil?
         unless self.file.path.nil?
-          res = self.file.url
+          res = style.blank? ? self.file.url : self.file.url(style)
         end
       end
       res
