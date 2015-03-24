@@ -75,7 +75,7 @@ module BcmsBlog
       reorder(on_homepage: :desc, featured: :desc, published_at: :desc)
     }
 
-    scope :fetured_first, lambda{
+    scope :featured_first, lambda{
       reorder(featured: :desc, published_at: :desc)
     }
 
