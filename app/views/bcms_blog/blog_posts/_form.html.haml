@@ -61,6 +61,11 @@
     If Blog Post is featured it will be presented first on hub page
 = f.input :featured, as: :boolean, label: "Should the blog post be featured", boolean_style: :inline
 
+%blockquote
+  %p
+    If case study image should have darker filter over images
+= f.input :dark_filter_enabled, as: :boolean, label: "Darker filter over images", boolean_style: :inline
+
 %hr/
 %blockquote
   %p
