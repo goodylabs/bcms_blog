@@ -40,12 +40,12 @@ module BcmsBlog
       if options[:exclude_tags]
         finder = finder.not_tagged_with(options[:exclude_tags])
       end
-      if options[:category] || options[:category_id]
-        category_type = Cms::CategoryType.named("Blog Post").first
-        category = category_type.categories.named(options[:category]).first if options[:category]
-        category = category_type.categories. find(options[:category_id])    if options[:category_id]
-        finder = finder.in_category(category)
-      end
+      # if options[:category] || options[:category_id]
+      #   category_type = Cms::CategoryType.named("Blog Post").first
+      #   category = self.category_type.categories.named(options[:category]).first if options[:category]
+      #   category = self.category_type.categories. find(options[:category_id])    if options[:category_id]
+      #   finder = finder.in_category(category)
+      # end
       finder
     end
 
