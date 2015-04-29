@@ -123,45 +123,25 @@
 
 - browser = UserAgent.parse(request.user_agent).browser
 - if browser == "Firefox" or browser == "Chrome"
-  - if Rails.env.production?
-    :javascript
-      $(function() {
-        $("#blog_post_file").picEdit({
-          defaultImage: "#{image_url}",
-          formSubmitted: function(request){
-            if (request.readyState === 4)  {
-              var urlArr = request.responseURL.split('/');
-              if (parseInt(urlArr[urlArr.length-1]).toString() !== 'NaN') {
-                var rurl = request.responseURL;
-                window.location = rurl.replace("http://", "https://"); 
-              } else {
-                var newDoc = document.open("text/html", "replace");
-                newDoc.write(request.responseText);
-                newDoc.close();
-              }
+  :javascript
+    $(function() {
+      $("#blog_post_file").picEdit({
+        defaultImage: "#{image_url}",
+        formSubmitted: function(request){
+          if (request.readyState === 4)  {
+            var urlArr = request.responseURL.split('/');
+            if (parseInt(urlArr[urlArr.length-1]).toString() !== 'NaN') {
+              window.location = request.responseURL;
+            } else {
+              var newDoc = document.open("text/html", "replace");
+              newDoc.write(request.responseText);
+              newDoc.close();
             }
           }
-        });
-      });
-  - else
-    :javascript
-      $(function() {
-        $("#blog_post_file").picEdit({
-          defaultImage: "#{image_url}",
-          formSubmitted: function(request){
-            if (request.readyState === 4)  {
-              var urlArr = request.responseURL.split('/');
-              if (parseInt(urlArr[urlArr.length-1]).toString() !== 'NaN') {
-                window.location = request.responseURL;  
-              } else {
-                var newDoc = document.open("text/html", "replace");
-                newDoc.write(request.responseText);
-                newDoc.close();
-              }
-            }
-          }
-        });
-      });
+        }
+      }
+      );
+    });
 
 %hr/
 
