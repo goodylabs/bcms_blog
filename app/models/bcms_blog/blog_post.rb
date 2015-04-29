@@ -138,7 +138,7 @@ module BcmsBlog
     end
 
     def extract_content_paragraph
-      Nokogiri::HTML.parse(self.body).css('p').first.to_s
+      Nokogiri::HTML.parse(self.body).css('p').first.text
     end
 
     def categories_and_subcategories_ids
