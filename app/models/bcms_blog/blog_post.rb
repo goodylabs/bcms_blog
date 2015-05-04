@@ -18,6 +18,10 @@ module BcmsBlog
     # belongs_to_category
     # belongs_to :subcategory, :class_name => 'Cms::Category'
 
+    scope :published_and_visible, lambda{
+      published.where('published_at <= ? ', DateTime.now)
+    }
+
     scope :in_category, lambda{|cat|
       joins(:categories).where('cms_categories.id' => cat.id)
     }
