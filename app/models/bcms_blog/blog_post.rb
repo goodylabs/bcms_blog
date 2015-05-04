@@ -142,7 +142,15 @@ module BcmsBlog
     end
 
     def extract_content_paragraph
-      Nokogiri::HTML.parse(self.body).css('p').first.text
+      summary = ""
+      if email_summary.blank?
+        text = Nokogiri::HTML.parse(self.body).css('p').first.to_s 
+        words = text.split(" ")
+        summary = words.length > 175 ? "#{words.first(175).join(" ")}..." : text
+      else
+        summary = self.email_summary  
+      end
+      summary
     end
 
     def categories_and_subcategories_ids
