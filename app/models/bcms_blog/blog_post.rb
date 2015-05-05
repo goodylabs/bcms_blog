@@ -144,11 +144,11 @@ module BcmsBlog
     def extract_content_paragraph
       summary = ""
       if email_summary.blank?
-        text = Nokogiri::HTML.parse(self.body).css('p').first.to_s 
+        text = Nokogiri::HTML.parse(self.body).css('p').first.text
         words = text.split(" ")
         summary = words.length > 175 ? "#{words.first(175).join(" ")}..." : text
       else
-        summary = self.email_summary  
+        summary = self.email_summary
       end
       summary
     end
