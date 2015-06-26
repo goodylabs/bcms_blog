@@ -91,8 +91,6 @@ module BcmsBlog
       where(featured: false)
     }
 
-
-
     scope :published_between, lambda { |start, finish|
       { :conditions => [
            "#{table_name}.published_at >= ? AND #{table_name}.published_at < ?",
@@ -158,7 +156,7 @@ module BcmsBlog
     end
 
     def related_posts_by_category_and_subcategory
-      self.blog.posts.in_categories_and_subcategories(self).where("NOT bcms_blog_blog_posts.id=?",self.id ).uniq
+      self.blog.posts.in_categories_and_subcategories(self).where("NOT bcms_blog_blog_posts.id=?",self.id ).published.where('bcms_blog_blog_posts.published_at <= ? ', DateTime.now).uniq
     end
 
 
