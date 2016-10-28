@@ -2,7 +2,7 @@ module BcmsBlog
   class BlogPost < ActiveRecord::Base
     acts_as_content_block :taggable => true
 
-    has_attachment :file, styles: { medium: '709x472', small: '354x230#', w4h12: '354x472', w12h6: '354x258', w8h12: '711x472'  }
+    has_attachment :file, styles: { medium: '709x472', small: '354x230#', w3h12: '354x472', w6h12: '643x426', w4h12: '354x472', w12h6: '354x258', w8h12: '711x472'  }
 
     has_attachment :video
     has_many :references, as: :referencable
