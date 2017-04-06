@@ -1,59 +1,28 @@
-- # _counter is defined only if we pass :collection to the partial
-- if defined?(blog_post_counter)
-  - showing_individual_post = false
-- else
-  - showing_individual_post = true
-  - blog_post_counter = 0
-.blog_post{id: "blog_post_#{blog_post.id}"}
+.html_block{id: "blog_post_#{blog_post.id}"}
 
-  - if blog_post.file.present? && blog_post.file.data_file_name.present?
-    .image
-      = image_tag blog_post.file.versioned_url
-  - if blog_post.image_url.present?
-    .image
-      = image_tag blog_post.image_url
+  %h1
+    = blog_post.name
 
-  - if blog_post.video.present? && blog_post.video.data_file_name.present?
-    .video
-      = video_tag blog_post.video.versioned_url, controls:true
+  - unless blog_post.summary.blank?
+    = blog_post.summary.html_safe
 
-  - if blog_post.video_url.present?
-    .image
-      = video_tag blog_post.video_url, controls:true
+  - unless blog_post.body.blank?
+    = blog_post.body.html_safe
 
 
-  %h2
-    = blog_post.published_author_name
+-# .blog_post{id: "blog_post_#{blog_post.id}"}
 
-  %h2= link_to h(blog_post.name), href = _blog_post_path(blog_post)
-  .date= blog_post.published_at.to_s(:long)
-  .body
-    - if showing_individual_post or blog_post.summary.blank?
-      = blog_post.body.html_safe
-    - else
-      = blog_post.summary
-      %p.read_more
-        = link_to 'Read More »', href
-  .meta
-    %p
-      = "Featured: #{blog_post.featured}"
-      = "On Homepage: #{blog_post.on_homepage}"
-    - unless blog_post.categories.empty?
-      - blog_post.categories.each do |category|
-        Posted in #{link_to h(category.name), _blog_path(blog_post.blog, 'posts_in_category', :category => category.name)}
-        %strong |
-    - if blog_post.tags.any?
-      Tags:
-      %span.tags
-        = blog_post.tags.map{|t| link_to(h(t.name), _blog_path(blog_post.blog, 'posts_with_tag', :tag => t.name)) }.join(", ").html_safe
-      %strong |
-    = link_to h(pluralize(blog_post.comments.published.count, "Comment")), "#{_blog_post_path(blog_post)}#comments"
-  %br/
-  - comments = blog_post.comments.published.reject(&:new_record?)
-  - if showing_individual_post and comments.any?
-    %h2 Comments
-    - comments.each_with_index do |comment, i|
-      %div{class: "comment #{'first' if i == 0}"}
-        = h comment.body
-        %p
-          —#{comment.url.present? ? link_to(h(comment.author), comment.url) : h(comment.author)}
+-#   - if blog_post.file.present? && blog_post.file.data_file_name.present?
+-#     .image
+-#       = image_tag blog_post.file.versioned_url
+-#   - if blog_post.image_url.present?
+-#     .image
+-#       = image_tag blog_post.image_url
+
+-#   - if blog_post.video.present? && blog_post.video.data_file_name.present?
+-#     .video
+-#       = video_tag blog_post.video.versioned_url, controls:true
+
+-#   - if blog_post.video_url.present?
+-#     .image
+-#       = video_tag blog_post.video_url, controls:true
