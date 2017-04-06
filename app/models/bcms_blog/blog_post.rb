@@ -119,7 +119,7 @@ module BcmsBlog
     }
 
     scope :authored_by_name_or_id, lambda { |user_name, user_id| 
-      where("author_name LIKE ? OR author_id = ? ", "%#{user_name}%", user_id)
+      where("(author_name LIKE ? OR author_id = ?) AND published = ?", "%#{user_name}%", user_id, true)
     }
 
     INCORRECT_PARAMETERS = "Incorrect parameters. This is probably because you are trying to view the " +
