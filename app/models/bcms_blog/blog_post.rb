@@ -118,6 +118,10 @@ module BcmsBlog
       # where(author_name: user_name, published: published)
     }
 
+    scope :authored_by_name_or_id, lambda { |user_name, user_id| 
+      where("author_name LIKE ? OR author_id = ? ", "%#{user_name}%", user_id)
+    }
+
     INCORRECT_PARAMETERS = "Incorrect parameters. This is probably because you are trying to view the " +
                            "portlet through the CMS interface, and so we have no way of knowing what " +
                            "post(s) to show"
