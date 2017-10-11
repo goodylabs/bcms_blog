@@ -223,6 +223,7 @@ module BcmsBlog
     end
 
     def set_slug
+      return if self.slug.present? || self.errors.present?
       self.slug = generate_slug(name.to_slug)
       # self.slug = name.to_slug
     end

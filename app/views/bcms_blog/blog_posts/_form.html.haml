@@ -27,7 +27,11 @@
   });
 
 %hr/
+%blockquote
+  %p Slug (URL for your advert). Please don’t include ‘/’ at the start. Leave blank to generate automatic URL (made up of job title and reference)
+= f.input :slug
 
+%hr/
 %blockquote
   %p
     The 'published' date/time for the post which is displayed publically.
