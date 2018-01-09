@@ -19,7 +19,7 @@ module BcmsBlog
     # belongs_to :subcategory, :class_name => 'Cms::Category'
 
     scope :published_and_visible, lambda{
-      published.where('published_at <= ? ', DateTime.now)
+      published.where('published_at <= ? ', DateTime.now - 30.minutes)
     }
 
     scope :in_category, lambda{|cat|
