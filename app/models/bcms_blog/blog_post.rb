@@ -276,6 +276,11 @@ module BcmsBlog
       res
     end
 
+    def as_json(options={})
+      options[:methods] = [:teaser_image_url]
+      super
+    end
+
     private
 
     def generate_slug(slug, suffix = '')
